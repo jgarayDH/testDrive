@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+
+  <section id="challenge">
+    <!--
+      Instructions: Below you will find multiple input fields, buttons, and a
+      table. The goal is to capture an item description, amount, and unit price
+      to later add it to the table while calculating the total price, adding it
+      to the last cell.
+      The following conditions should be met:
+        - The user shouldn't be able to add data to the table if one of the
+        fields is missing
+        - All fields should be cleared up once the data is added to the table
+    -->
+
+    <style>
+      input {
+        box-sizing: border-box;
+        display: block;
+        padding: 8px 12px;
+        width: 100%;
+      }
+
+      .btn {
+        appearance: none;
+        border: none;
+        border-radius: 4px;
+        background-color: #dedede;
+        cursor: pointer;
+        font-size: 16px;
+        margin-left: 8px;
+        padding: 8px 12px;
+      }
+
+      .btn:hover { background-color: #dadada; }
+      .btn:active { background-color: #cdcdcd; }
+
+      .container {
+        margin: 50px auto;
+        max-width: 600px;
+        width: 100%;
+      }
+
+      .content-row {
+        margin-bottom: 16px;
+        overflow: hidden;
+        width: 100%;
+      }
+
+      .content-row:last-of-type {
+        text-align: right;
+      }
+    </style>
+
+    <!-- Do not change the markup -->
+    <div class="container">
+      <div class="content-row">
+        <input type="text" name="description" id="description" placeholder="Description">
+      </div>
+
+      <div class="content-row">
+        <input type="number" name="amount" id="amount" placeholder="Amount">
+      </div>
+      <div class="content-row">
+        <input type="number" name="price" id="price" placeholder="Price">
+      </div>
+
+      <div class="content-row">
+        <button class="btn" data-action="action-r" id="remove">Remove</button>
+        <button class="btn" data-action="action-e" id="id">Edit</button>
+        <button class="btn" data-action="action-a" id="add">Add</button>
+      </div>
+
+      <table width="600" border="1" cellspacing="0" id="table">
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Amount</th>
+            <th>Unit price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody id="container">
+          <!-- Logic of the fields -->
+        </tbody>
+      </table>
+    </div>
+
+
+
+    <script>
+      // Your code here ********************************************************
+      // Variables
+      
+      let remove = document.getElementById('remove');
+      let id = document.getElementById('id');
+      let container = document.getElementById("container");
+      let itemTable = document.getElementById('table');
+      const addItemButton = document.getElementById('add');
+
+      // button actions
+      addItemButton.addEventListener('click', function() {
+        validation();
+      })
+
+      //Validate fields if are not empty
+      function validation() {
+        let description = document.getElementById('description').value;
+        let amount = parseFloat(document.getElementById('amount').value);
+        let unitPrice = parseFloat(document.getElementById('price').value);
+
+        if(description && !isNaN(amount) && !isNaN(unitPrice)) {
+          const totalPrice = amount * unitPrice;
+          const newRow = itemTable.insertRow(-1);
+          const cell1 = newRow.insertCell(0);
+          const cell2 = newRow.insertCell(1);
+          const cell3 = newRow.insertCell(2);
+          const cell4 = newRow.insertCell(3);
+          cell1.textContent = description;
+          cell2.textContent = amount;
+          cell3.textContent = unitPrice;
+          cell4.textContent = totalPrice;
+
+          reset();
+        } else {
+          alert('Please fill in all fields with valid values.');
+        }
+      }
+
+      //Clear all the fields
+      function reset() {
+        document.getElementById('description').value = '';
+        document.getElementById('amount').value = '';
+        document.getElementById('price').value = '';
+      }
+    
+    </script>
+
+  </section>
+
+</body>
+</html>
